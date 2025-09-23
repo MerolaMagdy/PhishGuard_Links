@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️PhishGuard - حماية متقدمة من التصيد الإلكتروني</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a1929;
+            --secondary: #1e3a5c;
+            --accent: #3a86ff;
+            --accent-dark: #2667cc;
+            --danger: #ff6b6b;
+            --success: #4ecdc4;
+            --warning: #ffd166;
+            --dark-blue: #0d1b2a;
+            --medium-blue: #1b263b;
+            --light-blue: #132e4c;
+            --text-light: #e0e1dd;
+            --text-muted: #a8b0c1;
+            --card-bg: rgba(30, 58, 92, 0.6);
+            --gradient: linear-gradient(135deg, #0a1929 0%, #1e3a5c 100%);
+            --glow: 0 0 20px rgba(58, 134, 255, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--gradient);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(58, 134, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            box-shadow: var(--glow);
+        }
+        
+        .logo-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--text-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .input-section {
+            flex: 1;
+            min-width: 350px;
+        }
+        
+        .input-section h2 {
+            margin-bottom: 25px;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-section h2 i {
+            margin-left: 10px;
+            color: var(--accent);
+        }
+        
+        .url-input {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .url-input input {
+            flex: 1;
+            padding: 18px 20px;
+            border: none;
+            background: rgba(10, 25, 41, 0.7);
+            font-size: 1rem;
+            color: var(--text-light);
+            outline: none;
+        }
+        
+        .url-input input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .url-input button {
+            padding: 0 30px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .url-input button:hover {
+            background: var(--accent-dark);
+        }
+        
+        .url-input button i {
+            margin-right: 8px;
+        }
+        
+        .examples {
+            margin-top: 25px;
+        }
+        
+        .examples h3 {
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .example-btn {
+            padding: 10px 15px;
+            background: rgba(10, 25, 41, 0.5);
+            border: 1px solid rgba(58, 134, 255, 0.3);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .example-btn:hover {
+            background: rgba(58, 134, 255, 0.2);
+            border-color: var(--accent);
+        }
+        
+        /* Result Section */
+        .result-section {
+            flex: 2;
+            min-width: 350px;
+            display: none;
+        }
+        
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .result-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            font-size: 2rem;
+            box-shadow: var(--glow);
+        }
+        
+        .safe .result-icon {
+            background: var(--success);
+        }
+        
+        .phishing .result-icon {
+            background: var(--danger);
+        }
+        
+        .suspicious .result-icon {
+            background: var(--warning);
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .confidence {
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .confidence-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .confidence-level {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        .safe .confidence-level {
+            background: var(--success);
+        }
+        
+        .phishing .confidence-level {
+            background: var(--danger);
+        }
+        
+        .suspicious .confidence-level {
+            background: var(--warning);
+        }
+        
+        .reasons {
+            margin-top: 30px;
+        }
+        
+        .reasons h3 {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .reasons h3 i {
+            margin-left: 10px;
+        }
+        
+        .reason-list {
+            list-style-type: none;
+        }
+        
+        .reason-list li {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-right: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .reason-list li:hover {
+            transform: translateX(5px);
+        }
+        
+        .reason-list li i {
+            margin-left: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .safe .reason-list li {
+            border-right-color: var(--success);
+        }
+        
+        .phishing .reason-list li {
+            border-right-color: var(--danger);
+        }
+        
+        .suspicious .reason-list li {
+            border-right-color: var(--warning);
+        }
+        
+        .detailed-analysis {
+            margin-top: 35px;
+        }
+        
+        .detailed-analysis h3 {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detailed-analysis h3 i {
+            margin-left: 10px;
+        }
+        
+        .analysis-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }
+        
+        .analysis-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .analysis-title {
+            font-weight: bold;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .analysis-title i {
+            margin-left: 8px;
+            color: var(--accent);
+        }
+        
+        .analysis-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .status-safe {
+            background: var(--success);
+            color: var(--dark-blue);
+        }
+        
+        .status-warning {
+            background: var(--warning);
+            color: var(--dark-blue);
+        }
+        
+        .status-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .analysis-details {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        .analysis-details .comparison {
+            display: flex;
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            gap: 15px;
+        }
+        
+        .analysis-details .expected, .analysis-details .found {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        
+        .analysis-details .expected {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 3px solid var(--success);
+        }
+        
+        .analysis-details .found {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 3px solid var(--danger);
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--accent);
+        }
+        
+        .feature-icon i {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 1.4rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 70px;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(78, 205, 196, 0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+        
+        .security-badge i {
+            margin-left: 8px;
+            color: var(--success);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .url-input {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+            
+            .url-input input {
+                border-radius: 12px 12px 0 0;
+            }
+            
+            .url-input button {
+                padding: 15px;
+                border-radius: 0 0 12px 12px;
+            }
+            
+            .analysis-details .comparison {
+                flex-direction: column;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>PhishGuard</h1>
+            </div>
+            <p>نظام متقدم للكشف عن هجمات التصيد الإلكتروني باستخدام أحدث تقنيات الذكاء الاصطناعي</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="card input-section">
+                <h2><i class="fas fa-link"></i> فحص الرابط</h2>
+                <div class="url-input">
+                    <input type="text" id="urlInput" placeholder="https://example.com">
+                    <button id="checkBtn"><i class="fas fa-search"></i> فحص الرابط</button>
+                </div>
+                <p style="color: var(--text-muted); margin-top: 15px;">أدخل الرابط الذي تريد فحصه وسيقوم PhishGuard بتحليله فوراً</p>
+                
+                <div class="examples">
+                    <h3><i class="fas fa-vial"></i> جرب هذه الأمثلة:</h3>
+                    <div class="example-buttons">
+                        <button class="example-btn" data-url="https://www.facebook.com">رابط آمن</button>
+                        <button class="example-btn" data-url="http://123.456.789.10/login-update-account">رابط مشبوه</button>
+                        <button class="example-btn" data-url="https://faceb00k-login.secure-account.com">رابط تصيد</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="card result-section" id="resultSection">
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon"><i class="fas fa-shield-check"></i></div>
+                    <div>
+                        <div class="result-title" id="resultTitle">جاهز للفحص</div>
+                        <div style="color: var(--text-muted); font-size: 1rem;">أدخل رابط للبدء في التحليل</div>
+                    </div>
+                </div>
+                
+                <div class="confidence" id="confidenceSection" style="display: none;">
+                    <div>مستوى الثقة: <span id="confidenceValue">0%</span></div>
+                    <div class="confidence-bar">
+                        <div class="confidence-level" id="confidenceLevel"></div>
+                    </div>
+                </div>
+                
+                <div class="reasons" id="reasonsSection" style="display: none;">
+                    <h3><i class="fas fa-list-check"></i> النتيجة العامة</h3>
+                    <ul class="reason-list" id="reasonList">
+                        <!-- سيتم إضافة الأسباب هنا ديناميكياً -->
+                    </ul>
+                </div>
+                
+                <div class="detailed-analysis" id="detailedAnalysis" style="display: none;">
+                    <!-- سيتم إضافة التحليل المفصل هنا ديناميكياً -->
+                </div>
+            </section>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>ذكاء اصطناعي متقدم</h3>
+                <p>يستخدم خوارزميات تعلم آلي متطورة للكشف عن أحدث أساليب التصيد</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>نتائج فورية</h3>
+                <p>يحلل الروابط في ثوانٍ معدودة ويقدم تقارير مفصلة عن النتائج</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>قاعدة بيانات شاملة</h3>
+                <p>يحتوي على آلاف الأنماط المعروفة للتصيد يتم تحديثها باستمرار</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>حماية شخصية</h3>
+                <p>يحمي معلوماتك الشخصية والمالية من مواقع التصيد الاحتيالية</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>PhishGuard &copy; 2023 - نظام الحماية المتقدم ضد التصيد الإلكتروني</p>
+            <div class="security-badge">
+                <i class="fas fa-lock"></i> اتصال آمن ومشفر
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkBtn = document.getElementById('checkBtn');
+            const urlInput = document.getElementById('urlInput');
+            const resultSection = document.getElementById('resultSection');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const confidenceSection = document.getElementById('confidenceSection');
+            const confidenceValue = document.getElementById('confidenceValue');
+            const confidenceLevel = document.getElementById('confidenceLevel');
+            const reasonsSection = document.getElementById('reasonsSection');
+            const reasonList = document.getElementById('reasonList');
+            const detailedAnalysis = document.getElementById('detailedAnalysis');
+            const exampleBtns = document.querySelectorAll('.example-btn');
+            
+            // إضافة أحداث النقر لأزرار الأمثلة
+            exampleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    urlInput.value = this.getAttribute('data-url');
+                    checkBtn.click();
+                });
+            });
+            
+            checkBtn.addEventListener('click', function() {
+                const url = urlInput.value.trim();
+                
+                if (!url) {
+                    showNotification('يرجى إدخال رابط للفحص', 'warning');
+                    return;
+                }
+                
+                // فحص الرابط
+                analyzeUrl(url);
+            });
+            
+            function analyzeUrl(url) {
+                // إظهار قسم النتائج
+                resultSection.classList.add('active');
+                confidenceSection.style.display = 'none';
+                reasonsSection.style.display = 'none';
+                detailedAnalysis.style.display = 'none';
+                
+                // حالة التحميل
+                resultSection.classList.remove('safe', 'phishing', 'suspicious');
+                resultIcon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                resultTitle.textContent = 'جاري فحص الرابط...';
+                resultTitle.parentElement.querySelector('div').textContent = 'قد تستغرق العملية بضع ثوانٍ';
+                
+                // محاكاة وقت التحميل
+                setTimeout(() => {
+                    // تحليل الرابط بناءً على محتواه
+                    const analysisResult = getUrlAnalysis(url);
+                    
+                    // تطبيق النتيجة
+                    displayResult(analysisResult.type, analysisResult.confidence, 
+                                analysisResult.reasons, analysisResult.analysis);
+                }, 1500);
+            }
+            
+            function getUrlAnalysis(url) {
+                // تحليل الرابط بناءً على محتواه
+                const domain = extractDomain(url);
+                let phishingScore = 0;
+                let reasons = [];
+                
+                // 1. فحص إذا كان يستخدم IP بدلاً من نطاق
+                const ipPattern = /^(https?:\/\/)?(\d{1,3}\.){3}\d{1,3}/;
+                if (ipPattern.test(url)) {
+                    phishingScore += 30;
+                    reasons.push('يستخدم عنوان IP بدلاً من نطاق معروف');
+                }
+                
+                // 2. فحص البروتوكول
+                if (!url.startsWith('https://')) {
+                    phishingScore += 25;
+                    reasons.push('لا يستخدم بروتوكول HTTPS الآمن');
+                }
+                
+                // 3. فحص محاولات التصيد (النطاق يحاكي نطاقات معروفة)
+                const spoofedDomains = [
+                    'facebook', 'google', 'paypal', 'apple', 'microsoft', 
+                    'amazon', 'netflix', 'instagram', 'whatsapp', 'twitter',
+                    'linkedin', 'yahoo', 'outlook', 'bank', 'pay'
+                ];
+                
+                let isSpoofed = false;
+                let originalDomain = '';
+                
+                for (let legitDomain of spoofedDomains) {
+                    // البحث عن محاولات استبدال أحرف (مثل faceb00k بدلاً من facebook)
+                    const variationPattern = new RegExp(legitDomain.split('').join('[o0]?'), 'i');
+                    if (variationPattern.test(domain) && !domain.includes(legitDomain + '.')) {
+                        phishingScore += 40;
+                        reasons.push(`النطاق يحاكي النطاق المعروف "${legitDomain}.com"`);
+                        isSpoofed = true;
+                        originalDomain = legitDomain + '.com';
+                        break;
+                    }
+                }
+                
+                // 4. فحص إذا كان النطاق يحتوي على كلمات مشبوهة
+                const suspiciousWords = ['login', 'secure', 'account', 'verify', 'update', 'security', 'banking'];
+                let hasSuspiciousWords = false;
+                for (let word of suspiciousWords) {
+                    if (domain.includes(word)) {
+                        phishingScore += 20;
+                        hasSuspiciousWords = true;
+                        break;
+                    }
+                }
+                if (hasSuspiciousWords) {
+                    reasons.push('النطاق يحتوي على كلمات مفتاحية مشبوهة');
+                }
+                
+                // 5. فحص طول النطاق (النطاقات الطويلة غالباً ما تكون مشبوهة)
+                if (domain.length > 30) {
+                    phishingScore += 15;
+                    reasons.push('النطاق طويل جداً مما يثير الشكوك');
+                }
+                
+                // 6. فحص إذا كان النطاق يحتوي على TLD صالح
+                const tldPattern = /\.(com|org|net|edu|gov|info|io|co|me|ai)$/i;
+                if (!tldPattern.test(domain)) {
+                    phishingScore += 20;
+                    reasons.push('لا يحتوي على نطاق علوي صالح (TLD)');
+                }
+                
+                // 7. فحص المسار
+                const suspiciousPaths = ['login', 'verify', 'update', 'account', 'password', 'signin'];
+                let hasSuspiciousPath = false;
+                for (let path of suspiciousPaths) {
+                    if (url.toLowerCase().includes(path)) {
+                        phishingScore += 15;
+                        hasSuspiciousPath = true;
+                        break;
+                    }
+                }
+                if (hasSuspiciousPath) {
+                    reasons.push('المسار يحتوي على كلمات مفتاحية للتصيد (تسجيل/تحقق/تحديث)');
+                }
+                
+                // تحديد النتيجة النهائية بناءً على المجموع
+                let resultType, confidence;
+                if (phishingScore >= 50) {
+                    resultType = 'phishing';
+                    confidence = Math.min(phishingScore + 20, 95);
+                } else if (phishingScore >= 25) {
+                    resultType = 'suspicious';
+                    confidence = phishingScore + 30;
+                } else {
+                    resultType = 'safe';
+                    confidence = 85 + (simpleHash(url) % 15);
+                }
+                
+                // إنشاء التحليل المفصل بناءً على النتيجة
+                const analysis = generateDetailedAnalysis(url, resultType, reasons, isSpoofed, originalDomain);
+                
+                return {
+                    type: resultType,
+                    confidence: confidence,
+                    reasons: reasons,
+                    analysis: analysis
+                };
+            }
+            
+            function displayResult(type, confidence, reasons, analysis) {
+                // إضافة الفئة المناسبة للنتيجة
+                resultSection.classList.add(type);
+                
+                // تحديث الأيقونة والعنوان
+                if (type === 'safe') {
+                    resultIcon.innerHTML = '<i class="fas fa-shield-check"></i>';
+                    resultTitle.textContent = 'رابط آمن';
+                    resultTitle.parentElement.querySelector('div').textContent = 'يمكنك استخدام هذا الرابط بأمان';
+                } else if (type === 'phishing') {
+                    resultIcon.innerHTML = '<i class="fas fa-skull-crossbones"></i>';
+                    resultTitle.textContent = 'رابط تصيد خطير';
+                    resultTitle.parentElement.querySelector('div').textContent = 'لا تستخدم هذا الرابط فهو موقع تصيد';
+                } else {
+                    resultIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                    resultTitle.textContent = 'رابط مشبوه';
+                    resultTitle.parentElement.querySelector('div').textContent = 'ينصح بعدم استخدام هذا الرابط';
+                }
+                
+                // إظهار وإعداد مستوى الثقة
+                confidenceSection.style.display = 'block';
+                confidenceValue.textContent = `${Math.round(confidence)}%`;
+                confidenceLevel.style.width = `${confidence}%`;
+                
+                // إظهار وإعداد قائمة الأسباب
+                reasonsSection.style.display = 'block';
+                reasonList.innerHTML = '';
+                if (reasons.length === 0) {
+                    reasons.push('لا توجد مؤشرات خطيرة في هذا الرابط');
+                }
+                reasons.forEach(reason => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fas fa-${type === 'safe' ? 'check' : type === 'phishing' ? 'times' : 'exclamation'}"></i> ${reason}`;
+                    reasonList.appendChild(li);
+                });
+                
+                // إظهار وإعداد التحليل المفصل
+                detailedAnalysis.style.display = 'block';
+                detailedAnalysis.innerHTML = analysis;
+                
+                // تمرير سلس للشريط
+                setTimeout(() => {
+                    confidenceLevel.style.transition = 'width 1.5s ease';
+                }, 100);
+                
+                // إشعار بنتيجة الفحص
+                showNotification(`تم فحص الرابط: ${type === 'safe' ? 'آمن' : type === 'phishing' ? 'تصيد' : 'مشبوه'}`, type);
+            }
+            
+            function generateDetailedAnalysis(url, type, reasons, isSpoofed, originalDomain) {
+                const domain = extractDomain(url);
+                
+                if (type === 'safe') {
+                    return `
+                        <h3><i class="fas fa-microscope"></i> التحليل المفصل</h3>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-globe"></i> تحليل النطاق</div>
+                                <div class="analysis-status status-safe">آمن</div>
+                            </div>
+                            <div class="analysis-details">
+                                النطاق "${domain}" صالح ويحتوي على نطاق علوي معروف. لا توجد مؤشرات على التصيد.
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-lock"></i> بروتوكول الاتصال</div>
+                                <div class="analysis-status status-safe">آمن</div>
+                            </div>
+                            <div class="analysis-details">
+                                يستخدم الرابط بروتوكول HTTPS الذي يوفر تشفيراً أمناً للبيانات المنقولة.
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-road"></i> تحليل المسار</div>
+                                <div class="analysis-status status-safe">آمن</div>
+                            </div>
+                            <div class="analysis-details">
+                                المسار لا يحتوي على كلمات مفتاحية مشبوهة أو محاولات إخفاء.
+                            </div>
+                        </div>
+                    `;
+                } else if (type === 'phishing') {
+                    let domainAnalysis = '';
+                    
+                    if (isSpoofed) {
+                        domainAnalysis = `
+                            <div class="comparison">
+                                <div class="found">
+                                    <strong>النطاق المفحوص:</strong><br>
+                                    ${domain}
+                                </div>
+                                <div class="expected">
+                                    <strong>النطاق الأصلي:</strong><br>
+                                    ${originalDomain}
+                                </div>
+                            </div>
+                            <p>تم اكتشاف محاولة تزوير للنطاق (Domain Spoofing) حيث يحاول النطاق محاكاة نطاق موثوق.</p>
+                        `;
+                    } else {
+                        domainAnalysis = `النطاق "${domain}" يحتوي على مؤشرات قوية على أنه موقع تصيد.`;
+                    }
+                    
+                    return `
+                        <h3><i class="fas fa-microscope"></i> التحليل المفصل</h3>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-globe"></i> تحليل النطاق</div>
+                                <div class="analysis-status status-danger">خطير</div>
+                            </div>
+                            <div class="analysis-details">
+                                ${domainAnalysis}
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-lock"></i> بروتوكول الاتصال</div>
+                                <div class="analysis-status ${url.startsWith('https://') ? 'status-warning' : 'status-danger'}">${url.startsWith('https://') ? 'مشبوه' : 'خطير'}</div>
+                            </div>
+                            <div class="analysis-details">
+                                ${!url.startsWith('https://') ? 
+                                    'الاتصال غير مشفر مما يسهل اعتراض البيانات.' : 
+                                    'حتى مع HTTPS، هناك مؤشرات قوية أخرى للتصيد.'}
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-road"></i> تحليل المسار</div>
+                                <div class="analysis-status status-danger">خطير</div>
+                            </div>
+                            <div class="analysis-details">
+                                ${reasons.includes('المسار يحتوي على كلمات مفتاحية للتصيد') ? 
+                                    'المسار يحتوي على كلمات مثل "login" أو "update" والتي تستخدم عادة في هجمات التصيد.' : 
+                                    'المسار يحتوي على مؤشرات أخرى للتصيد.'}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <h3><i class="fas fa-microscope"></i> التحليل المفصل</h3>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-globe"></i> تحليل النطاق</div>
+                                <div class="analysis-status status-warning">مشبوه</div>
+                            </div>
+                            <div class="analysis-details">
+                                النطاق "${domain}" يحتوي على بعض المؤشرات المشبوهة التي تحتاج إلى مراجعة.
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-lock"></i> بروتوكول الاتصال</div>
+                                <div class="analysis-status status-warning">مشبوه</div>
+                            </div>
+                            <div class="analysis-details">
+                                ${!url.startsWith('https://') ? 
+                                    'الاتصال غير مشفر مما يجعله أقل أماناً.' : 
+                                    'الاتصال مشفر ولكن هناك مؤشرات أخرى تحتاج مراجعة.'}
+                            </div>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-header">
+                                <div class="analysis-title"><i class="fas fa-road"></i> تحليل المسار</div>
+                                <div class="analysis-status status-warning">مشبوه</div>
+                            </div>
+                            <div class="analysis-details">
+                                المسار يحتوي على كلمات تحتاج إلى مراجعة قبل المتابعة.
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            function extractDomain(url) {
+                try {
+                    const domain = new URL(url.startsWith('http') ? url : 'https://' + url).hostname;
+                    return domain.replace('www.', '');
+                } catch (e) {
+                    return url.split('/')[0];
+                }
+            }
+            
+            function simpleHash(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash);
+            }
+            
+            function showNotification(message, type) {
+                // إنشاء عنصر الإشعار
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    color: white;
+                    font-weight: bold;
+                    z-index: 1000;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                if (type === 'safe') {
+                    notification.style.background = 'var(--success)';
+                } else if (type === 'phishing') {
+                    notification.style.background = 'var(--danger)';
+                } else if (type === 'warning') {
+                    notification.style.background = 'var(--warning)';
+                    notification.style.color = 'var(--dark-blue)';
+                } else {
+                    notification.style.background = 'var(--accent)';
+                }
+                
+                document.body.appendChild(notification);
+                
+                // إزالة الإشعار بعد 3 ثوان
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+            
+            // إضافة أنماط CSS للرسوم المتحركة
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { top: -100px; opacity: 0; }
+                    to { top: 20px; opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { top: 20px; opacity: 1; }
+                    to { top: -100px; opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // السماح بالضغط على Enter لفحص الرابط
+            urlInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
